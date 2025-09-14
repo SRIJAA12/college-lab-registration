@@ -1,32 +1,63 @@
-import { Router } from "express";
-import { registerUser, loginUser } from "../controllers/authController";
-import jwt from "jsonwebtoken";
-import User from "../models/User";
-import { protect } from "../middleware/authMiddleware"; // ✅ use middleware for protected routes
+import express from 'express';
+import {
+  loginUser,
+  verifyToken,
+  verifyDob,
+  resetPasswordWithToken,
+  facultyResetPassword,
+  getUserProfile,
+  updateProfile,
+  changePassword
+} from '../controllers/authController';
+import { authenticateToken, authorizeRole } from '../middleware/auth';
+import {
+  loginValidation,
+  verifyDobValidation,
+  resetPasswordValidation,
+  facultyResetPasswordValidation,
+  changePasswordValidation
+} from '../middleware/validation';
 
-const router = Router();
-router.get("/me", protect, async (req: any, res) => {
-  const user = await User.findById(req.user.id).select("-password");
-  res.json({ user });
-});
+const router = express.Router();
 
-// ✅ Register new user
-router.post("/register", registerUser);
+// @route   POST /api/auth/login
+// @desc    Login user
+// @access  Public
+router.post('/login', loginValidation, loginUser);
 
-// ✅ Login user
-router.post("/login", loginUser);
+// @route   GET /api/auth/verify
+// @desc    Verify token and get user info
+// @access  Private
+router.get('/verify', authenticateToken, verifyToken);
 
-// ✅ Get current user profile (protected)
-router.get("/me", protect, async (req: any, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
+// @route   POST /api/auth/verify-dob
+// @desc    Verify DOB for password reset
+// @access  Public
+router.post('/verify-dob', verifyDobValidation, verifyDob);
 
-    res.json({ user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// @route   POST /api/auth/reset-password
+// @desc    Reset password with token
+// @access  Public (with valid reset token)
+router.post('/reset-password', resetPasswordValidation, resetPasswordWithToken);
+
+// @route   POST /api/auth/faculty-reset-password
+// @desc    Faculty reset student password
+// @access  Private (Faculty only)
+router.post('/faculty-reset-password', authenticateToken, authorizeRole('faculty'), facultyResetPasswordValidation, facultyResetPassword);
+
+// @route   GET /api/auth/profile
+// @desc    Get current user profile
+// @access  Private
+router.get('/profile', authenticateToken, getUserProfile);
+
+// @route   PUT /api/auth/profile
+// @desc    Update user profile
+// @access  Private
+router.put('/profile', authenticateToken, updateProfile);
+
+// @route   POST /api/auth/change-password
+// @desc    Change password
+// @access  Private
+router.post('/change-password', authenticateToken, changePasswordValidation, changePassword);
 
 export default router;

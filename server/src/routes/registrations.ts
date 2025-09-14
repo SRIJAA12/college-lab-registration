@@ -1,13 +1,85 @@
-import { Router } from "express";
-import { addRegistration, getRegistrations } from "../controllers/registrationController";
-import { protect } from "../middleware/authMiddleware";
+import { Request, Response, NextFunction } from 'express';
 
-const router = Router();
+export const createRegistration = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(201).json({
+      success: true,
+      message: 'Registration created successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-// ✅ Student submits registration
-router.post("/", protect, addRegistration);
+export const getAllRegistrations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      registrations: []
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-// ✅ Faculty gets all registrations (optional: protect faculty only)
-router.get("/", protect, getRegistrations);
+export const getMyRegistrations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      registrations: []
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-export default router;
+export const endSession = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      message: 'Session ended successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRegistrationStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      stats: {}
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLabUtilization = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      utilization: {}
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const exportRegistrations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      data: 'CSV data here'
+    });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/icon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="description" content="College Lab Registration System - Automated lab usage tracking and management" />
+    <meta name="author" content="College IT Department" />
+    <meta name="keywords" content="college, lab, registration, management, tracking" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Bootstrap CSS -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" 
+      crossorigin="anonymous"
+    />
+    
+    <!-- Font Awesome -->
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer" 
+    />
+    
+    <title>College Lab Registration System</title>
+    
+    <!-- Inline critical CSS for performance -->
+    <style>
+      /* Loading screen styles */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+      }
+      
+      .loading-content {
+        text-align: center;
+      }
+      
+      .loading-spinner {
+        width: 3rem;
+        height: 3rem;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading screen when React takes over */
+      .app-loaded .loading-screen {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h2>JavaScript Required</h2>
+        <p>You need to enable JavaScript to run this application.</p>
+        <p>Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
+    
+    <!-- Loading screen shown until React loads -->
+    <div class="loading-screen" id="loading-screen">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h4>College Lab Registration System</h4>
+        <p>Loading application...</p>
+      </div>
+    </div>
+    
+    <!-- React app root -->
+    <div id="root"></div>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script 
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" 
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- Hide loading screen when page is fully loaded -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(function() {
+              loadingScreen.style.display = 'none';
+              document.body.classList.add('app-loaded');
+            }, 500);
+          }
+        }, 1000); // Show loading for at least 1 second
+      });
+      
+      // Log application info
+      console.log('College Lab Registration System');
+      console.log('Version: 1.0.0');
+      console.log('Environment:', '%NODE_ENV%');
+      console.log('Build Date:', new Date().toISOString());
+    </script>
+  </body>
+</html>

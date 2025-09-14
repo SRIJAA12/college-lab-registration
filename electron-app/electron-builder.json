@@ -1,0 +1,108 @@
+{
+  "appId": "com.college.lab-registration",
+  "productName": "College Lab Registration",
+  "copyright": "Copyright © 2025 College IT Department",
+  "directories": {
+    "output": "dist",
+    "buildResources": "build-resources"
+  },
+  "files": [
+    "build/**/*",
+    "dist-electron/**/*",
+    "node_modules/**/*",
+    "package.json"
+  ],
+  "extraMetadata": {
+    "main": "dist-electron/main.js"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "msi",
+        "arch": ["x64"]
+      },
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "public/assets/icon.ico",
+    "publisherName": "College IT Department",
+    "requestedExecutionLevel": "asInvoker",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "verifyUpdateCodeSignature": false
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "public/assets/icon.icns",
+    "category": "public.app-category.education",
+    "hardenedRuntime": true,
+    "entitlements": "build-resources/entitlements.mac.plist",
+    "entitlementsInherit": "build-resources/entitlements.mac.plist"
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": ["x64"]
+      },
+      {
+        "target": "deb",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "public/assets/icon.png",
+    "category": "Education"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Lab Registration",
+    "runAfterFinish": true,
+    "installerIcon": "public/assets/icon.ico",
+    "uninstallerIcon": "public/assets/icon.ico",
+    "installerHeaderIcon": "public/assets/icon.ico",
+    "license": "LICENSE.txt"
+  },
+  "msi": {
+    "oneClick": false,
+    "runAfterFinish": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Lab Registration"
+  },
+  "dmg": {
+    "title": "${productName} ${version}",
+    "icon": "public/assets/icon.icns",
+    "window": {
+      "width": 540,
+      "height": 380
+    },
+    "contents": [
+      {
+        "x": 410,
+        "y": 150,
+        "type": "link",
+        "path": "/Applications"
+      },
+      {
+        "x": 130,
+        "y": 150,
+        "type": "file"
+      }
+    ]
+  },
+  "publish": {
+    "provider": "generic",
+    "url": "https://your-update-server.com/releases"
+  },
+  "compression": "maximum",
+  "removePackageScripts": true
+}

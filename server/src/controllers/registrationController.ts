@@ -1,48 +1,85 @@
-import { Request, Response } from "express";
-import Registration from "../models/Registrations";
+import { Request, Response, NextFunction } from 'express';
 
-// ✅ Add a new registration
-export const addRegistration = async (req: any, res: Response) => {
+export const createRegistration = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { rollNo, labNo, systemNo, machineId } = req.body;
-
-    const newEntry = new Registration({
-      userId: req.user._id, // comes from middleware
-      name: req.user.name,
-      rollNo,
-      labNo,
-      systemNo,
-      timestamp: new Date(),
-      machineId,
+    // Implementation here
+    res.status(201).json({
+      success: true,
+      message: 'Registration created successfully'
     });
-
-    await newEntry.save();
-    res.status(201).json({ message: "Registration saved", entry: newEntry });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    next(error);
   }
 };
 
-// ✅ Get all registrations (faculty use)
-export const getRegistrations = async (req: Request, res: Response) => {
+export const getAllRegistrations = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { date, labNo, rollNo } = req.query;
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      registrations: []
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-    const filter: any = {};
-    if (date) {
-      const start = new Date(date as string);
-      const end = new Date(date as string);
-      end.setHours(23, 59, 59, 999);
-      filter.timestamp = { $gte: start, $lte: end };
-    }
-    if (labNo) filter.labNo = labNo;
-    if (rollNo) filter.rollNo = rollNo;
+export const getMyRegistrations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      registrations: []
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-    const entries = await Registration.find(filter).sort({ timestamp: -1 });
-    res.json(entries);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+export const endSession = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      message: 'Session ended successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRegistrationStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      stats: {}
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLabUtilization = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      utilization: {}
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const exportRegistrations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Implementation here
+    res.status(200).json({
+      success: true,
+      data: 'CSV data here'
+    });
+  } catch (error) {
+    next(error);
   }
 };
